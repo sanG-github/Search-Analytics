@@ -1,9 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Attachment, type: :model do
+RSpec.describe SourceCode, type: :model do
   describe 'associations' do
-    it { should belong_to(:user) }
-    it { should have_many(:results) }
+    it { should belong_to(:result) }
   end
 
   describe 'validations' do
