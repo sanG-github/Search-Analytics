@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_10_042501) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_10_055531) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,6 +34,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_042501) do
     t.index ["attachment_id"], name: "index_results_on_attachment_id"
   end
 
+  create_table "source_codes", force: :cascade do |t|
+    t.text "content"
+    t.bigint "result_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["result_id"], name: "index_source_codes_on_result_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -48,4 +56,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_042501) do
 
   add_foreign_key "attachments", "users"
   add_foreign_key "results", "attachments"
+  add_foreign_key "source_codes", "results"
 end
