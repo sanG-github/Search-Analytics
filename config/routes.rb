@@ -4,5 +4,5 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  resources :attachments
+  resources :attachments, only: %i(create)
 end
