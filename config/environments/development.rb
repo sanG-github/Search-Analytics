@@ -71,6 +71,6 @@ Rails.application.configure do
   # Devise mailer
   config.action_mailer.default_url_options = {
     host: ENV.fetch("HOST") { 'localhost' },
-    port: ENV.fetch("PORT") { 3000 }
+    port: ENV.fetch("PORT", 3000)
   }
 end
