@@ -22,16 +22,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_033331) do
     t.index ["user_id"], name: "index_attachments_on_user_id"
   end
 
-  create_table "files", force: :cascade do |t|
-    t.string "content"
-    t.bigint "files_id"
-    t.bigint "users_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["files_id"], name: "index_files_on_files_id"
-    t.index ["users_id"], name: "index_files_on_users_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
