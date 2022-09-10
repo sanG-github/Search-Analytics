@@ -31,3 +31,6 @@ config/settings/*.local.yml
 config/environments/*.local.yml
 .vscode/*
 *.local
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
