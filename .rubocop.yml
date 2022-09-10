@@ -1,0 +1,147 @@
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/LineLength:
+  # This will disable the rule completely, regardless what other options you put
+  Enabled: false
+  # Change the default 80 chars limit value
+  Max: 120
+  # If you want the rule only apply to a specific folder/file
+  Include:
+    - "app/**/*"
+  # If you want the rule not to apply to a specific folder/file
+  Exclude:
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Style/SymbolArray:
+  Enabled: true
+  Exclude:
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 150
+
+Metrics/MethodLength:
+  Max: 70
+
+Metrics/BlockLength:
+  Max: 110
+  ExcludedMethods: ["describe", "context"]
+  Exclude:
+    - "config/environments/*"
+    - "config/routes.rb"
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+    - "config/routes/*"
+    - "lib/tasks/mrg_node.rake"
+
+Layout/SpaceInsideHashLiteralBraces:
+  Exclude:
+    - config/environments/*
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Style/HashSyntax:
+  Exclude:
+    - config/environments/*
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Layout/HashAlignment:
+  Exclude:
+    - config/environments/*
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Layout/FirstHashElementIndentation:
+  Exclude:
+    - config/environments/*
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Style/StringLiterals:
+  Exclude:
+    - config/environments/*
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Style/NumericLiterals:
+  Exclude:
+    - config/environments/*
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Layout/EmptyLinesAroundBlockBody:
+  Exclude:
+    - config/environments/*
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Style/WordArray:
+  Exclude:
+    - config/environments/*
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Style/ExpandPathArguments:
+  Exclude:
+    - config/environments/*
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Style/MixinUsage:
+  Exclude:
+    - config/environments/*
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Layout/EmptyLines:
+  Exclude:
+    - config/environments/*
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Exclude:
+    - config/environments/*
+    - "db/schema.rb"
+    - "Gemfile"
+    - "bin/*"
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - "test/*"
+
+Metrics/CyclomaticComplexity:
+  Max: 50
+
+Metrics/PerceivedComplexity:
+  Max: 50
+
+Layout/TrailingEmptyLines:
+  Enabled: true
+
+Style/GlobalVars:
+  Enabled: false
