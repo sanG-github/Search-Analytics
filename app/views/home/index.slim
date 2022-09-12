@@ -1,1 +1,30 @@
-= render 'shared/upload_file'
+section.header.relative.md:pt-16.items-center.flex.h-screen.max-h-860-px.shrink
+  .container.mx-auto.items-center.flex.flex-wrap
+    div[class="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4"]
+      .visible.md:hidden
+        = image_tag("creative.jpeg")
+      .md:pt-32.pt-16
+        h1.mb-4.text-3xl.font-extrabold.text-gray-900.md:text-5xl.lg:text-6xl
+          span.text-transparent.bg-clip-text.bg-gradient-to-r.from-sky-400.to-emerald-600
+            | Search Analytics
+          p.md:text-3xl.lg:text-4xl
+            | Parsing results from keywords.
+        p.mt-4.text-lg.leading-relaxed.text-blueGray-500
+          | From an array keywords
+          span.mx-2.p-1.text-white.bg-blue-600.rounded JSON
+          | or a list of keywords
+          span.ml-2.p-1.text-white.bg-blue-600.rounded CSV
+          | . You get
+        .mt-12
+          = form_for @attachment do |f|
+            = f.file_field :file, id: "hidden_upload_file", class: "hidden"
+          button[type="button" id="upload_file" class="text-white bg-teal-600 hover:bg-teal-700 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2 5 text-center inline-flex items-center mr-2 mb-2"]
+            | Upload file
+            svg.ml-2.-mr-1.w-5.h-5.w-6.h-6[xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"]
+              path[fill-rule="evenodd" d="M11.47 2.47a.75.75 0 011.06 0l4.5 4.5a.75.75 0 01-1.06 1.06l-3.22-3.22V16.5a.75.75 0 01-1.5 0V4.81L8.03 8.03a.75.75 0 01-1.06-1.06l4.5-4.5zM3 15.75a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z" clip-rule="evenodd"]
+          button[type="button" class="text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2 5 text-center inline-flex items-center mr-2 mb-2"]
+            | Show uploaded results
+            svg.ml-2.-mr-1.w-5.h-5.w-6.h-6[xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"]
+              path[fill-rule="evenodd" d="M4.755 10.059a7.5 7.5 0 0112.548-3.364l1.903 1.903h-3.183a.75.75 0 100 1.5h4.992a.75.75 0 00.75-.75V4.356a.75.75 0 00-1.5 0v3.18l-1.9-1.9A9 9 0 003.306 9.67a.75.75 0 101.45.388zm15.408 3.352a.75.75 0 00-.919.53 7.5 7.5 0 01-12.548 3.364l-1.902-1.903h3.183a.75.75 0 000-1.5H2.984a.75.75 0 00-.75.75v4.992a.75.75 0 001.5 0v-3.18l1.9 1.9a9 9 0 0015.059-4.035.75.75 0 00-.53-.918z" clip-rule="evenodd"]
+
+            img.absolute.top-0.b-auto.right-0.pt-16.max-h-860px.-mt-48.sm:mt-0.invisible[src="https://demos.creative-tim.com/notus-react/static/media/pattern_react.01996482.png" alt="side-image" class="w-6/12 md:visible"]
