@@ -4,5 +4,9 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  resources :attachments, only: %i[create]
+  resources :attachments, only: %i[index create] do
+    get :results, on: :member
+  end
+
+  resources :results, only: %i[index show]
 end
