@@ -1,7 +1,8 @@
 class AttachmentsController < ApplicationController
   def index
-    last_attachment = Attachment.last
+    last_attachment = Attachment.where(user_id: current_user.id).last
 
+    # TODO: handle case last_attachment is nil
     redirect_to results_attachment_path(last_attachment)
   end
 
