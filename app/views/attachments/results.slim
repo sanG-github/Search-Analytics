@@ -1,0 +1,23 @@
+.flex
+  = render "side_bar"
+  .w-full.h-full.p-4.m-8.overflow-y-auto
+    .p-10.h-full.border-4.border-dotted
+      .overflow-x-auto.relative.shadow-md.sm:rounded-lg
+        table.w-full.text-sm.text-left.text-gray-500.text-center
+          thead.text-xs.text-gray-700.uppercase.bg-gray-50
+            tr
+              th.py-3.px-6[scope="col"]
+                |  Result ID
+              th.py-3.px-6[scope="col"]
+                |  Keyword
+              th.py-3.px-6[scope="col"]
+                |  Total ads
+              th.py-3.px-6[scope="col"]
+                |  Total links
+              th.py-3.px-6[scope="col"]
+                |  Total results
+              th.py-3.px-6[scope="col"]
+                span.sr-only
+                  | Show
+            tbody
+              = render @attachment.results

@@ -1,5 +1,5 @@
 const listenUploadFile = {
-  uploadBtn:  document.getElementById("upload_file"),
+  uploadBtn: document.getElementById("upload_file"),
   hiddenUploadBtn: document.getElementById("hidden_upload_file"),
   submitAttachmentBtn: document.getElementById("new_attachment"),
 
@@ -9,13 +9,13 @@ const listenUploadFile = {
   },
 
   listenUpload: function() {
-    this.uploadBtn.addEventListener("click", () => {
+    this.uploadBtn?.addEventListener("click", () => {
       this.hiddenUploadBtn.click()
     })
   },
 
   handleAutoSubmit: function() {
-    this.hiddenUploadBtn.addEventListener("change", () => {
+    this.hiddenUploadBtn?.addEventListener("change", () => {
       this.submitAttachmentBtn.submit()
     })
   }
