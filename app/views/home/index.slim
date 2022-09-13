@@ -10,11 +10,11 @@ section.header.relative.md:pt-16.items-center.flex.h-screen.max-h-860-px.shrink
           p.md:text-3xl.lg:text-4xl
             | Parsing results from keywords.
         p.mt-4.text-lg.leading-relaxed.text-blueGray-500
-          | From an array keywords
-          span.mx-2.p-1.text-white.bg-blue-600.rounded JSON
-          | or a list of keywords
+          | From a list of keywords
           span.ml-2.p-1.text-white.bg-blue-600.rounded CSV
-          | . You get
+          |  that separated by a
+          span.ml-2.p-1.text-white.bg-blue-600.rounded comma
+          |. You get
         .mt-12
           = form_for @attachment do |f|
             = f.file_field :file, id: "hidden_upload_file", class: "hidden"

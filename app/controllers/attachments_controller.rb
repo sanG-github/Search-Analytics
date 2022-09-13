@@ -6,7 +6,7 @@ class AttachmentsController < ApplicationController
   end
 
   def results
-    @attachments = Attachment.where(user_id: current_user.id)
+    @attachments = Attachment.where(user_id: current_user.id).order(created_at: :desc)
     @attachment = Attachment.includes(:results).find_by(id: params[:id], user_id: current_user.id)
   end
 
