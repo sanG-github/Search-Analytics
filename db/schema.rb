@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_10_055531) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_14_165640) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_055531) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
     t.index ["user_id"], name: "index_attachments_on_user_id"
   end
 
@@ -32,6 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_055531) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["attachment_id"], name: "index_results_on_attachment_id"
+    t.index ["keyword"], name: "index_results_on_keyword"
   end
 
   create_table "source_codes", force: :cascade do |t|
@@ -39,6 +41,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_10_055531) do
     t.bigint "result_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "ads", array: true
+    t.text "links", array: true
     t.index ["result_id"], name: "index_source_codes_on_result_id"
   end
 
