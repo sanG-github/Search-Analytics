@@ -1,29 +1,38 @@
+require 'resolv-replace'
+
 class CrawlGoogleDataService
-  def initialize(keyword:)
-    @keyword = keyword
+  def initialize(result_id:)
+    @result_id = result_id
   end
 
   def call
-    doc = fetch_search_result
+    Result.transaction do
+      @data = fetch_search_result
 
-    ads = doc.css("#{ADS_ID} > div")
-    total_ads = ads.size
+      ads = parse_ads
+      links = parse_links
+      total_results = parse_totol_result
 
-    links = doc.css('a > @href').uniq
-    total_links = links.size
-
-    total_results = doc.css(TOTAL_RESULTS_ID).text
-
-    [total_links, total_results, total_ads]
+      result.done!
+      result.update!(total_ads: ads.size, total_links: links.size, total_results: total_results)
+    end
   end
 
   private
 
-  attr_reader :keyword
+  attr_reader :result_id, :data
+
+  def result
+    @result ||= Result.find(result_id)
+  end
+
+  def keyword
+    @keyword ||= result.keyword
+  end
 
   def fetch_search_result
-    url = GOOGLE_SEARCH_URI + keyword
-    uri = URI.parse(CGI.escape(url))
+    url = GOOGLE_SEARCH_URI + URI.encode_www_form_component(keyword)
+    uri = URI.parse(url)
     req_options = { use_ssl: uri.scheme == 'https' }
 
     response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
@@ -35,5 +44,17 @@ class CrawlGoogleDataService
     end
 
     Nokogiri::HTML(response.body)
+  end
+
+  def parse_ads
+    data.css("#{ADS_ID} > div")
+  end
+
+  def parse_links
+    data.css('a > @href').uniq
+  end
+
+  def parse_totol_result
+    data.css(TOTAL_RESULTS_ID).text
   end
 end

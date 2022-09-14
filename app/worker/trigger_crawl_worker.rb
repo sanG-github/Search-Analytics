@@ -2,10 +2,10 @@ class TriggerCrawlWorker
   include Sidekiq::Job
 
   def perform(attachment_id = nil)
-    fetching_keywords = Result.fetching.where(attachment_id: attachment_id)
+    fetching_results = Result.fetching.where(attachment_id: attachment_id)
 
-    fetching_keywords.each do |keyword|
-      CrawlGoogleDataWorker.new(keyword).perform
+    fetching_results.each do |result|
+      CrawlGoogleDataWorker.perform_async(result.id)
     end
   end
 end

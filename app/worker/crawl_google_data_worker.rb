@@ -1,7 +1,7 @@
 class CrawlGoogleDataWorker
   include Sidekiq::Job
 
-  def perform(keyword = nil)
-    CrawlGoogleDataService.new(keyword: keyword).call
+  def perform(result_id)
+    CrawlGoogleDataService.new(result_id: result_id).call
   end
 end
