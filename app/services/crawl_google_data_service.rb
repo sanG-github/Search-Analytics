@@ -15,6 +15,7 @@ class CrawlGoogleDataService
 
       result.done!
       result.update!(total_ads: ads.size, total_links: links.size, total_results: total_results)
+      result.create_source_code!(content: data)
     end
   end
 
