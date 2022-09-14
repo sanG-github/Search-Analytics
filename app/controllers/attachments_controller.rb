@@ -12,9 +12,9 @@ class AttachmentsController < ApplicationController
   end
 
   def create
-    result = Attachments::CreateService.new(file: attachment_params[:file]).call
+    attachment = Attachments::CreateService.new(file: attachment_params[:file], user: current_user).call
 
-    render json: result
+    redirect_to results_attachment_path(attachment)
   end
 
   private
