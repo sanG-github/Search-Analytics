@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    action-cable-testing (0.6.1)
+      actioncable (>= 5.0)
     actioncable (7.0.4)
       actionpack (= 7.0.4)
       activesupport (= 7.0.4)
@@ -289,6 +291,7 @@ PLATFORMS
   x86_64-darwin-20
 
 DEPENDENCIES
+  action-cable-testing
   bootsnap
   capybara
   debug

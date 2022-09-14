@@ -1,0 +1,36 @@
+.flex.min-h-full.items-center.justify-center.py-12.px-4.sm:px-6.lg:px-8
+  .w-full.max-w-md.space-y-8
+    div
+      img.mx-auto.h-12.w-auto[src="https://nimblehq.co/assets/images/logos/horizontal-1024.png" alt="Nimble"]
+      h2.mt-6.text-center.text-3xl.font-bold.tracking-tight.text-gray-900
+        | Sign in to your account
+    = form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "mt-8 space-y-6"}, data: { turbo: false }) do |f|
+      = render "users/shared/error_messages", resource: resource
+      input[type="hidden" name="remember" value="true"]
+      .-space-y-px.rounded-md.shadow-sm
+        div
+          label.sr-only[for="email-address"]
+            | Email address
+          = f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Username", class: "relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+        div
+          label.sr-only[for="password"]
+            | Password
+          = f.password_field :password, autocomplete: "current-password", placeholder: "Password", class: "relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+        div
+          label.sr-only[for="password_confirmation"]
+            | Password
+          = f.password_field :password_confirmation, autocomplete: "current-password", placeholder: "Password confirmation", class: "relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+      .flex.items-center.justify-between
+        .flex.items-center
+          = f.check_box :remember_me, class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          label.ml-2.block.text-sm.text-gray-900[for="user_remember_me"]
+            | Remember me
+        .text-sm
+          a.font-medium.text-indigo-600.hover:text-indigo-500[href="#{new_user_session_path}"]
+            | Have an account?
+      div
+        button.group.relative.flex.w-full.justify-center.rounded-md.border.border-transparent.bg-indigo-600.py-2.px-4.text-sm.font-medium.text-white.hover:bg-indigo-700.focus:outline-none.focus:ring-2.focus:ring-indigo-500.focus:ring-offset-2[type="submit"]
+          span.absolute.inset-y-0.left-0.flex.items-center.pl-3
+            svg.h-5.w-5.text-indigo-500.group-hover:text-indigo-400[xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true"]
+              path[fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd"]
+          |  Sign up
