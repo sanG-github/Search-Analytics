@@ -1,4 +1,4 @@
-import consumer from "channels/consumer"
+import consumer from 'channels/consumer'
 
 consumer.subscriptions.create("NotificationsChannel", {
   connected() {
@@ -10,6 +10,17 @@ consumer.subscriptions.create("NotificationsChannel", {
   },
 
   received(data) {
-    console.log(data)
+    if(data?.success)
+      this.showSuccessNotification(data.message)
+    else
+      this.showFailureNotification(data.message)
+  },
+
+  showSuccessNotification(message) {
+    toastr.success(message)
+  },
+
+  showFailureNotification(message) {
+    toastr.error(message)
   }
 });

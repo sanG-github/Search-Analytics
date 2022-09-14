@@ -46,6 +46,7 @@ gem "bootsnap", require: false
 # gem "sassc-rails"
 
 gem 'devise'
+gem 'jquery-rails'
 gem 'rubocop'
 gem 'sidekiq'
 gem 'slim-rails'

@@ -15,6 +15,8 @@ class AttachmentsController < ApplicationController
     attachment = Attachments::CreateService.new(file: attachment_params[:file], user: current_user).call
 
     redirect_to results_attachment_path(attachment)
+  rescue BehaviorError => e
+    PushNotificationWorker.perform_async(current_user.id, e.response)
   end
 
   private
