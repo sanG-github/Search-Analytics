@@ -13,6 +13,7 @@ module Attachments
       keywords = parse_csv_data
 
       raise 'Empty file' unless file_content.present? && keywords&.size
+      raise "Only accept files containing up to #{MAX_KEYWORDS} keywords" if keywords.size > MAX_KEYWORDS
 
       attachment = Attachment.create!(content: file_content, user: user)
       attachment.results.create!(keywords.map { { keyword: _1 } })
