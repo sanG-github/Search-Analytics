@@ -6,14 +6,14 @@ module Attachments
     end
 
     def call
-      raise 'File not found' unless file
-      raise 'Invalid file type' unless valid_file?
+      raise BehaviorError, 'File not found' unless file
+      raise BehaviorError, 'Invalid file type' unless valid_file?
 
       # keywords is a CSV separated by comma (,)
       keywords = parse_csv_data
 
-      raise 'Empty file' unless file_content.present? && keywords&.size
-      raise "Only accept files containing up to #{MAX_KEYWORDS} keywords" if keywords.size > MAX_KEYWORDS
+      raise BehaviorError, 'Cannot handle empty file!' unless file_content.present? && keywords&.size
+      raise BehaviorError, "Only accept files containing up to #{MAX_KEYWORDS} keywords" if keywords.size > MAX_KEYWORDS
 
       attachment = Attachment.create!(content: file_content, user: user)
       attachment.results.create!(keywords.map { { keyword: _1 } })
@@ -37,7 +37,7 @@ module Attachments
       @file_content = file.read
       @file_content.split(separator).uniq
     rescue StandardError
-      raise 'Error when read file'
+      raise BehaviorError, 'Error when read file'
     end
   end
 end

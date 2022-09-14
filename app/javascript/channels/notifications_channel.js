@@ -13,7 +13,7 @@ consumer.subscriptions.create("NotificationsChannel", {
     if(data?.success)
       this.showSuccessNotification(data.message)
     else
-      this.showFailureNotification(data.message())
+      this.showFailureNotification(data.message)
   },
 
   showSuccessNotification(message) {
