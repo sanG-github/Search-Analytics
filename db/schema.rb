@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_14_163316) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_14_163529) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_14_163316) do
     t.bigint "result_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "ads", array: true
+    t.text "links", array: true
     t.index ["result_id"], name: "index_source_codes_on_result_id"
   end
 
