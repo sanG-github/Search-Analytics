@@ -2,8 +2,12 @@ class AttachmentsController < ApplicationController
   def index
     last_attachment = Attachment.where(user_id: current_user.id).last
 
-    # TODO: handle case last_attachment is nil
-    redirect_to results_attachment_path(last_attachment)
+    return redirect_to results_attachment_path(last_attachment) if last_attachment
+
+    raise BehaviorError, 'Please upload keywords!'
+  rescue BehaviorError => e
+    PushNotificationWorker.perform_in(0.001, current_user.id, e.response)
+    redirect_to root_path
   end
 
   def results
