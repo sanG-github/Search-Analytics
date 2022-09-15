@@ -1,0 +1,10 @@
+.container.mx-auto.mt-8
+  .mb-6
+    = render "shared/disable_input", title: "Result ID", content: @result.id
+    = render "shared/disable_input", title: "Keyword", content: @result.keyword
+    = render "shared/disable_input", title: "Total advertises", content: @result.total_ads
+    = render "shared/disable_input", title: "Total links", content: @result.total_links
+    = render "shared/disable_input", title: "Total results", content: @result.total_results
+    = render "shared/disable_input_array", title: "Advertises", content: @result.source_code.ads
+    = render "shared/disable_input_array", title: "All links", content: @result.source_code.links
+    = render "shared/disable_input", title: "Source code", content: @result.source_code.content
