@@ -3,6 +3,7 @@ module Attachments
     def initialize(file:, user:)
       @file = file
       @user = user
+      @file_content = nil
     end
 
     def call
@@ -15,7 +16,7 @@ module Attachments
       raise BehaviorError, 'Cannot handle empty file!' unless file_content.present? && keywords&.size
       raise BehaviorError, "Only accept files containing up to #{MAX_KEYWORDS} keywords" if keywords.size > MAX_KEYWORDS
 
-      attachment = Attachment.create!(content: file_content, user: user)
+      attachment = user.attachments.create!(content: file_content, name: file.original_filename)
       attachment.results.create!(keywords.map { { keyword: _1 } })
 
       ::TriggerCrawlWorker.perform_async(attachment.id)

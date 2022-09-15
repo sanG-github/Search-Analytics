@@ -15,7 +15,7 @@ class CrawlGoogleDataService
 
       result.done!
       result.update!(total_ads: ads.size, total_links: links.size, total_results: total_results)
-      result.create_source_code!(content: data)
+      result.create_source_code!(content: data, ads: ads, links: links)
     end
 
     PushResultWorker.perform_async(result.user.id, broadcast_data)
@@ -50,11 +50,11 @@ class CrawlGoogleDataService
   end
 
   def parse_ads
-    data.css("#{ADS_ID} > div")
+    data.css("#{ADS_ID} > div").map(&:value)
   end
 
   def parse_links
-    data.css('a > @href').uniq
+    data.css('a > @href').uniq.map(&:value)
   end
 
   def parse_totol_result
