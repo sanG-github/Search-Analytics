@@ -7,7 +7,6 @@ import "controllers"
 import "channels"
 import listenUploadFile from "./homepages/listen_upload_file";
 
-listenUploadFile.initialize();
 toastr.options = {
   "closeButton": true,
   "debug": false,
@@ -25,3 +24,7 @@ toastr.options = {
   "hideMethod": "fadeOut",
   "positionClass": "toast-top-right"
 }
+
+document.addEventListener("turbo:load", () => {
+  listenUploadFile.initialize();
+});
