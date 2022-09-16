@@ -51,10 +51,14 @@ class CrawlGoogleDataService
 
   def parse_ads
     data.css("#{ADS_ID} > div").map(&:value)
+  rescue StandardError
+    data.css("#{ADS_ID} > div").map(&:content)
   end
 
   def parse_links
     data.css('a > @href').uniq.map(&:value)
+  rescue StandardError
+    data.css('a > @href').uniq
   end
 
   def parse_totol_result
