@@ -1,7 +1,7 @@
 class ResultsController < ApplicationController
   def index
     @results = current_user.results
-    @results = @results.where('keyword LIKE ?', "%" + params[:q] + "%") if params[:q].present?
+    @results = @results.where('keyword LIKE %?%', params[:q]) if params[:q].present?
   end
 
   def show
