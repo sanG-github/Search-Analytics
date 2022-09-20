@@ -1,0 +1,9 @@
+section.header.relative.md:pt-16.items-center.flex.h-screen.max-h-860-px.shrink
+  .container.mx-auto.flex.justify-center
+    div[class="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4 text-center flex flex-col items-center"]
+      .bg-red-100.mb-4.border.border-red-400.text-red-700.px-4.py-3.rounded.relative[role="alert"]
+        strong.font-bold
+          | You don't have any keywords,
+        span.block.sm:inline
+          | please upload a file containing them!
+      = render "shared/info_and_upload_attachment", show_list_attachments_btn: false
