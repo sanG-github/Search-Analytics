@@ -10,6 +10,5 @@ Rails.application.routes.draw do
     get :results, on: :member
   end
 
-
   draw(:external_apis)
 end

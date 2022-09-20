@@ -5,7 +5,7 @@ class ResultsController < ApplicationController
     @results = current_user.results.by_keyword(params[:q].to_s)
   end
 
-  def show;end
+  def show; end
 
   def preview
     render html: @result.source_code.content.html_safe
