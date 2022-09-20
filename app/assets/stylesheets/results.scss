@@ -1,0 +1,59 @@
+$title-color: #f92672;
+$content-color: #a6e22e;
+$color-black: #2E2F30;
+
+.result-page {
+  display: flex;
+  border: 1px solid;
+  border-radius: 0.5rem;
+
+  .information-tab, .preview-tab {
+    padding: 1rem;
+    position: relative;
+  }
+
+  .information-tab {
+    font-size: 14px;
+    font-family: Consolas,monaco,monospace;
+    background-color: $color-black;
+
+    .title {
+      flex: 3;
+      color: $title-color;
+    }
+    .content {
+      flex: 7;
+      color: $content-color;
+    }
+    .array-content {
+      font-size: 12px;
+      word-wrap: break-word;      /* IE 5.5-7 */
+      white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+      white-space: pre-wrap;      /* current browsers */
+    }
+  }
+
+  .preview-tab iframe {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    overflow: hidden;
+    position: relative;
+
+    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    zoom: 0.75;
+    -ms-zoom: 0.75;
+    transform-origin: 0 0;
+    -moz-transform: scale(0.5);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(0.5);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(0.5);
+    -webkit-transform-origin: 0 0;
+  }
+}
