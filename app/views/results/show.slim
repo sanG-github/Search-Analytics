@@ -11,4 +11,4 @@
       = render "shared/disable_input_array", title: "All links", content: @result.source_code.links
       = render "shared/disable_input", title: "Source code", content: @result.source_code.content
     .preview-tab.div[class="w-6/12"]
-      iframe[src=preview_result_path(@result) loading="lazy" ]
+      iframe[srcdoc=@result.source_code.content loading="lazy" ]
