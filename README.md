@@ -1,3 +1,14 @@
+# Functionality
+
+---
+
+Our application support reading a CSV file that contains keywords separated by a comma. Then analyze the google search and return:
+
+- Total links on the search page
+- Total advertises on the search page
+- Total results with the keyword
+- HTML of the page (You also can preview it)
+
 # Versioning
 
 ---
