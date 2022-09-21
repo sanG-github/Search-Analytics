@@ -1,10 +1,9 @@
-.flex.flex-col.items-end
-  .px-12[class="w-5/12"]
-    = render "shared/search_input"
-  .w-full.h-screen.p-10.overflow-y-auto
-    .p-10.h-screen.border-4.border-dotted.overflow-y-auto
-      .overflow-x-auto.relative.shadow-md.sm:rounded-lg
-        table.w-full.text-sm.text-left.text-gray-500.text-center
+.flex.flex-col.items-end.container.mx-auto.px-5
+  = render "shared/search_input"
+  .results.w-full.overflow-y-auto
+    .overflow-x-auto.relative.shadow-md
+      table.w-full.text-sm.text-left.text-gray-500.text-center
+        - if @results.any?
           thead.text-xs.text-gray-700.uppercase.bg-gray-50
             tr
               th.py-3.px-6[scope="col"]
@@ -22,3 +21,9 @@
                   | Show
             tbody
               = render @results
+        - else
+          .bg-red-100.mb-4.border.border-red-400.text-center.text-red-700.px-4.py-3.rounded.relative[role="alert"]
+            strong.font-bold
+              | The keyword you searched for didn't have any results,
+            span.block.sm:inline
+              | please try another keyword!
