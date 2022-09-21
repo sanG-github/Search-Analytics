@@ -1,0 +1,2 @@
+class PushResultError < SearchAnalyticsError
+end
