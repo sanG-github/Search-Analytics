@@ -1,0 +1,2 @@
+class CreateAttachmentError < SearchAnalyticsError
+end

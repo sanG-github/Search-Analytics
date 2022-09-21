@@ -22,7 +22,7 @@ class CrawlGoogleDataService
 
     PushResultWorker.perform_async(result.user.id, broadcast_data)
   rescue StandardError => e
-    Rails.logger.warn "CrawlGoogleDataService#call: #{e.message}"
+    raise CrawlGoogleError, e.message
   end
 
   private
