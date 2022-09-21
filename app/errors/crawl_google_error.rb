@@ -1,0 +1,2 @@
+class CrawlGoogleError < SearchAnalyticsError
+end
