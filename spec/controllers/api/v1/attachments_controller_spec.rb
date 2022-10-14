@@ -37,5 +37,20 @@ RSpec.describe Api::V1::AttachmentsController, type: :controller do
         expect(result['error']).to eq(error_message)
       end
     end
+
+    context 'when receive a StandardError from service' do
+      it 'returns an error message' do
+        user = create :user
+        error_message = "Error message test"
+        sign_in user
+        allow_any_instance_of(Attachments::CreateService).to receive(:call).and_raise(StandardError, error_message)
+
+        post :create
+        result = JSON.parse(response.body)
+
+        expect(result['error']).to be_present
+        expect(result['error']).to eq(error_message)
+      end
+    end
   end
 end
