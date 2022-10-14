@@ -50,13 +50,6 @@ RSpec.describe ResultsController, type: :controller do
   end
 
   describe 'GET #show' do
-    subject { get :show, params: { id: result.id } }
-
-    let(:attachment) { create :attachment, user_id: user.id }
-    let(:result) { create :result, attachment_id: attachment.id }
-    let(:un_authored_attachment) { create :attachment, user_id: other_user.id }
-    let(:un_authored_result) { create :result, attachment_id: un_authored_attachment.id }
-
     it 'returns result of user' do
       attachment = create :attachment, user_id: user.id
       result = create :result, attachment_id: attachment.id
