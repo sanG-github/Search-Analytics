@@ -7,7 +7,7 @@ RSpec.describe AttachmentsController, type: :controller do
 
   describe 'GET #index' do
     context 'when the user has at least one attachment' do
-      it 'redirect to the last attachment detail' do
+      it 'redirects to the last attachment detail' do
         user = create :user
         create_list :attachment, 10, user_id: user.id
         last_attachment = user.attachments.last
@@ -19,7 +19,7 @@ RSpec.describe AttachmentsController, type: :controller do
       end
     end
 
-    context 'not have any attachments' do
+    context 'when the user does not have any attachments' do
       it 'renders the page with an instantiated instance variable' do
         user = create :user
 
@@ -49,8 +49,8 @@ RSpec.describe AttachmentsController, type: :controller do
   end
 
   describe 'POST #create' do
-    context 'with valid file' do
-      it 'create a new attachment and redirect the the detail page' do
+    context 'when upload valid file' do
+      it 'creates a new attachment and redirects to the detail page' do
         user = create :user
         params = {
           attachment: {
@@ -66,9 +66,10 @@ RSpec.describe AttachmentsController, type: :controller do
       end
     end
 
-    context 'with invalid file' do
-      it 'send error message by worker' do
+    context 'when upload invalid file' do
+      it 'sends and error message by the worker' do
         user = create :user
+        error_message = 'Cannot handle empty file!'
         params = {
           attachment: {
             file: fixture_file_upload('empty_file.csv', 'text/csv')
@@ -79,6 +80,7 @@ RSpec.describe AttachmentsController, type: :controller do
         post :create, params: params
 
         expect(PushNotificationWorker.jobs.size).to eq(1)
+        expect(PushNotificationWorker.jobs.first["args"][1]["message"]).to eq(error_message)
       end
     end
   end
