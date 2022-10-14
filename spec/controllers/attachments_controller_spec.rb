@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe AttachmentsController, type: :controller do
-  let(:user) { create :user }
-  before { sign_in user }
-
   describe 'Filters' do
     it { should use_before_action(:authenticate_user!) }
   end
@@ -11,9 +8,11 @@ RSpec.describe AttachmentsController, type: :controller do
   describe 'GET #index' do
     context 'when the user has at least one attachment' do
       it 'redirect to the last attachment detail' do
+        user = create :user
         create_list :attachment, 10, user_id: user.id
         last_attachment = user.attachments.last
 
+        sign_in user
         get :index
 
         expect(response).to redirect_to results_attachment_path(last_attachment)
@@ -22,6 +21,9 @@ RSpec.describe AttachmentsController, type: :controller do
 
     context 'not have any attachments' do
       it 'renders the page with an instantiated instance variable' do
+        user = create :user
+
+        sign_in user
         get :index
 
         expect(subject).to render_template(:index)
@@ -33,9 +35,11 @@ RSpec.describe AttachmentsController, type: :controller do
 
   describe 'GET #results' do
     it 'renders the page with instance variables' do
+      user = create :user
       attachments = create_list :attachment, 10, user_id: user.id
       attachment = attachments.sample
 
+      sign_in user
       get :results, params: { id: attachment.id }
 
       expect(response).to render_template(:results)
@@ -47,11 +51,14 @@ RSpec.describe AttachmentsController, type: :controller do
   describe 'POST #create' do
     context 'with valid file' do
       it 'create a new attachment and redirect the the detail page' do
+        user = create :user
         params = {
           attachment: {
             file: fixture_file_upload('valid_file.csv', 'text/csv')
           }
         }
+
+        sign_in user
         post :create, params: params
 
         expect(user.attachments.size).to eq(1)
@@ -61,11 +68,14 @@ RSpec.describe AttachmentsController, type: :controller do
 
     context 'with invalid file' do
       it 'send error message by worker' do
+        user = create :user
         params = {
           attachment: {
             file: fixture_file_upload('empty_file.csv', 'text/csv')
           }
         }
+
+        sign_in user
         post :create, params: params
 
         expect(PushNotificationWorker.jobs.size).to eq(1)
