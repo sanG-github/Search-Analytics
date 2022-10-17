@@ -4,6 +4,9 @@ Style/FrozenStringLiteralComment:
 Metrics/ClassLength:
   Enabled: false
 
+AllCops:
+  NewCops: enable
+
 Metrics/LineLength:
   # This will disable the rule completely, regardless what other options you put
   Enabled: false
@@ -36,7 +39,7 @@ Metrics/MethodLength:
 
 Metrics/BlockLength:
   Max: 110
-  ExcludedMethods: ["describe", "context"]
+  AllowedMethods: ["describe", "context"]
   Exclude:
     - "config/environments/*"
     - "config/routes.rb"
