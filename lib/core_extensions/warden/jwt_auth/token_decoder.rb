@@ -6,7 +6,7 @@ module CoreExtensions
       module TokenDecoderCustom
         def call(token)
           JWT.decode(token,
-                     decoding_secret || ENV['JWT_SECRET_KEY'],
+                     decoding_secret || ENV.fetch('JWT_SECRET_KEY', nil),
                      true,
                      algorithm: algorithm,
                      verify_jti: true)[0]
