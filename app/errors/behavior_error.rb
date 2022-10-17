@@ -3,6 +3,7 @@ class BehaviorError < StandardError
 
   def initialize(message = nil)
     @message = message
+    super
   end
 
   def response

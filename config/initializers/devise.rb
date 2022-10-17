@@ -311,7 +311,7 @@ Devise.setup do |config|
 
   config.navigational_formats = ['*/*', :html, :turbo_stream]
   config.jwt do |jwt|
-    jwt.secret = ENV['JWT_SECRET_KEY']
+    jwt.secret = ENV.fetch('JWT_SECRET_KEY', nil)
     jwt.dispatch_requests = [
       ['POST', %r{/api/v1/users/sign_in}]
     ]
