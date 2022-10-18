@@ -78,6 +78,9 @@ RUN if [ "$BUILD_ENV" = "production" ]; then bundle install --jobs $BUNDLE_JOBS 
 # since the app files always change thus cannot be cached
 COPY . ./
 
+# Generate masterkey
+RUN EDITOR="mate --wait" bin/rails credentials:edit
+
 # Compile assets
 RUN bundle exec rails assets:precompile
 
