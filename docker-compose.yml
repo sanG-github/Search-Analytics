@@ -5,7 +5,8 @@ services:
     image: postgres:14.5
     container_name: search-analytics_db
     environment:
-      - POSTGRES_DB=search-analytics_production
+      - POSTGRES_DB=$POSTGRES_DATABASE
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
     ports:
       - "5432:5432"
 
@@ -16,16 +17,17 @@ services:
       - "6379:6379"
 
   web:
+    platform: linux/x86_64
     build:
       context: .
       cache_from:
-        - ${DOCKER_REGISTRY_HOST}/${DOCKER_IMAGE}:${BRANCH_TAG}
+        - ${DOCKER_IMAGE}:${BRANCH_TAG}
       args:
-        - BUILD_ENV=production
         - RUBY_ENV=production
         - NODE_ENV=production
-        - ASSET_HOST
-    image: ${DOCKER_REGISTRY_HOST}/${DOCKER_IMAGE}:${BRANCH_TAG}
+        - BUILD_ENV=production
+        - ASSET_HOST=
+    image: ${DOCKER_IMAGE}:${BRANCH_TAG}
     container_name: search-analytics_web
     command: bin/start.sh
     ports:
@@ -40,11 +42,10 @@ services:
       - RACK_ENV=production
       - RAILS_ENV=production
       - NODE_ENV=production
-      - DATABASE_URL=postgres://postgres@db/search-analytics_production
-      - ASSET_HOST
-      - DEFAULT_HOST
-      - MAILER_SENDER
-      - RAILS_MASTER_KEY
+      - DATABASE_URL=postgres://postgres:$POSTGRES_PASSWORD@db/$POSTGRES_DATABASE
+      - ASSET_HOST=
+      - DEFAULT_HOST=
+      - MAILER_SENDER=
 
 volumes:
   ruby-bundle:

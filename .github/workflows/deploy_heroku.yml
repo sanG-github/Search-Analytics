@@ -40,9 +40,9 @@ jobs:
         run: |
           if [[ $BRANCH_TAG = "latest" ]]
           then
-            echo "HEROKU_APP=<%= APP_NAME %>" >> $GITHUB_ENV
+            echo "HEROKU_APP=search-analytics" >> $GITHUB_ENV
           else
-            echo "HEROKU_APP=<%= APP_NAME %>-staging" >> $GITHUB_ENV
+            echo "HEROKU_APP=search-analytics-staging" >> $GITHUB_ENV
           fi
 
       - name: Login to Docker registry
