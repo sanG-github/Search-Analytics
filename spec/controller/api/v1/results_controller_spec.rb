@@ -110,7 +110,7 @@ RSpec.describe Api::V1::ResultsController, type: :controller do
       expect(result).to include(nimble_result.keyword, company_result.keyword, other_vietnam_result.keyword)
     end
 
-    it 'do NOT have any keywords' do
+    it 'does NOT have any keywords' do
       user = create :user
 
       sign_in user
