@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :attachment do
     user
 
-    name { Faker::File.file_name }
-    content { 10.times.map { Faker::Name.name }.join(',') }
+    name { FFaker::Filesystem.file_name }
+    content { 10.times.map { FFaker::Name.name }.join(',') }
   end
 end
