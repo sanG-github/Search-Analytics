@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Result < ApplicationRecord
   belongs_to :attachment
   has_one :source_code, dependent: :destroy
