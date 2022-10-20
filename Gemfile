@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -63,7 +65,7 @@ group :development, :test do
   gem "debug", platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
-  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'main'
+  gem 'ffaker'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'rspec-sidekiq'
@@ -86,6 +88,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem 'shoulda-matchers', '~> 5.0'
-  gem "webdrivers"
   gem 'simplecov', require: false
+  gem "webdrivers"
 end
