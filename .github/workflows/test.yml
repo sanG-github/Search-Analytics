@@ -17,7 +17,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@1.115.3
+        uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
       - name: Lint Ruby files
@@ -41,7 +41,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@1.115.3
+        uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
       # Add or replace database setup steps here
