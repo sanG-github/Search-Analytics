@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AttachmentsController < ApplicationController
   def index
     last_attachment = Attachment.where(user_id: current_user.id).last

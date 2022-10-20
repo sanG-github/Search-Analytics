@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Attachments
   class CreateService
     def initialize(file:, user:)
@@ -33,7 +35,7 @@ module Attachments
     end
 
     def parse_csv_data
-      separator = ','.freeze
+      separator = ','
 
       @file_content = file.read
       @file_content.split(separator).uniq

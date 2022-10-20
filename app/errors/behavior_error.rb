@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BehaviorError < StandardError
   attr_accessor :message
 
