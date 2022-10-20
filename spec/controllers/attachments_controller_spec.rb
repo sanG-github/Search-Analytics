@@ -20,7 +20,7 @@ RSpec.describe AttachmentsController, type: :controller do
     end
 
     context 'when the user does not have any attachments' do
-      it 'renders the page with an instantiated instance variable' do
+      it 'renders the page with a new instantiated instance variable' do
         user = create :user
 
         sign_in user
@@ -34,7 +34,7 @@ RSpec.describe AttachmentsController, type: :controller do
   end
 
   describe 'GET #results' do
-    it 'renders the page with instance variables' do
+    it 'renders the page with user attachments ordered by created_at DESC' do
       user = create :user
       attachments = create_list :attachment, 10, user_id: user.id
       attachment = attachments.sample
@@ -49,7 +49,7 @@ RSpec.describe AttachmentsController, type: :controller do
   end
 
   describe 'POST #create' do
-    context 'when upload valid file' do
+    context 'when a valid file is uploaded' do
       it 'creates a new attachment and redirects to the detail page' do
         user = create :user
         params = {
@@ -66,8 +66,8 @@ RSpec.describe AttachmentsController, type: :controller do
       end
     end
 
-    context 'when upload invalid file' do
-      it 'sends and error message by the worker' do
+    context 'when an invalid file is uploaded' do
+      it 'sends an error message by the worker' do
         user = create :user
         error_message = 'Cannot handle empty file!'
         params = {
