@@ -4,13 +4,25 @@
 #
 # This workflow will install a prebuilt Ruby version, install dependencies, and
 # run tests and linters.
-name: "CI"
+name: Test
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
   pull_request:
     branches: [ "*" ]
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@1.115.3
+        with:
+          bundler-cache: true
+      - name: Lint Ruby files
+        run: bundle exec rubocop --parallel
+
   test:
     runs-on: ubuntu-latest
     services:
@@ -29,7 +41,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install Ruby and gems
-        uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
+        uses: ruby/setup-ruby@1.115.3
         with:
           bundler-cache: true
       # Add or replace database setup steps here
@@ -38,15 +50,3 @@ jobs:
       # Add or replace test runners here
       - name: Run tests
         run: bundle exec rspec spec
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Install Ruby and gems
-        uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
-        with:
-          bundler-cache: true
-      - name: Lint Ruby files
-        run: bundle exec rubocop --parallel
