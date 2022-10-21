@@ -41,4 +41,3 @@ RSpec.describe TriggerCrawlWorker, type: :job do
     end
   end
 end
-

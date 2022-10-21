@@ -17,4 +17,3 @@ RSpec.describe PushResultWorker, type: :job do
     end
   end
 end
-

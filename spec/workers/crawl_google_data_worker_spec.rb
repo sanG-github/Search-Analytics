@@ -19,4 +19,3 @@ RSpec.describe CrawlGoogleDataWorker, type: :job do
     end
   end
 end
-

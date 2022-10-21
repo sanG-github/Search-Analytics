@@ -17,4 +17,3 @@ RSpec.describe PushNotificationWorker, type: :job do
     end
   end
 end
-
