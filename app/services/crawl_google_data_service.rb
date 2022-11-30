@@ -19,6 +19,8 @@ class CrawlGoogleDataService
     end
 
     PushResultWorker.perform_async(result.user.id, broadcast_data)
+  rescue StandardError => e
+    raise CrawlGoogleError, e.message
   end
 
   private

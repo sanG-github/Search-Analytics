@@ -1,0 +1,2 @@
+class PushNotificationError < SearchAnalyticsError
+end
