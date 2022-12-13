@@ -21,7 +21,7 @@ RSpec.describe ResultsController, type: :controller do
         another_user = create :user
         number_of_results = 10
         attachment = create :attachment, user_id: user.id
-        un_authored_attachment = create :attachment, user_id: another_user.id
+        another_user_attachment = create :attachment, user_id: another_user.id
         create_list :result, number_of_results, attachment_id: attachment.id
 
         sign_in user
@@ -31,7 +31,7 @@ RSpec.describe ResultsController, type: :controller do
         expect(response).to have_http_status :success
         expect(results.size).to eq(number_of_results)
         expect(results.klass.name).to eq(Result.name)
-        expect(results.pluck('DISTINCT attachment_id')).not_to include(un_authored_attachment.id)
+        expect(results.pluck('DISTINCT attachment_id')).not_to include(another_user_attachment.id)
       end
     end
 
