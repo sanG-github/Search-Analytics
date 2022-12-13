@@ -100,12 +100,12 @@ RSpec.describe ResultsController, type: :controller do
       it 'raises a record not found error' do
         user = create :user
         another_user = create :user
-        un_authored_attachment = create :attachment, user_id: another_user.id
-        un_authored_result = create :result, attachment_id: un_authored_attachment.id
+        another_user_attachment = create :attachment, user_id: another_user.id
+        another_user_result = create :result, attachment_id: another_user_attachment.id
 
         sign_in user
         expect do
-          get :show, params: { id: un_authored_result.id }
+          get :show, params: { id: another_user_result.id }
         end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
