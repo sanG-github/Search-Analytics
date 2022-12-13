@@ -6,6 +6,6 @@ class ResultsController < ApplicationController
   end
 
   def show
-    @result = current_user.results.find_by(id: params[:id])
+    @result = current_user.results.find(params[:id])
   end
 end

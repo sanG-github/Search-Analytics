@@ -6,13 +6,22 @@ RSpec.describe ResultsController, type: :controller do
   end
 
   describe 'GET #index' do
-    context 'without params' do
-      it 'returns all results of user' do
+    context 'given the search parameter does NOT present' do
+      it 'returns success status' do
         user = create :user
-        other_user = create :user
+
+        sign_in user
+        get :index
+
+        expect(response).to have_http_status :success
+      end
+
+      it 'returns all results of the user' do
+        user = create :user
+        another_user = create :user
         number_of_results = 10
         attachment = create :attachment, user_id: user.id
-        un_authored_attachment = create :attachment, user_id: other_user.id
+        un_authored_attachment = create :attachment, user_id: another_user.id
         create_list :result, number_of_results, attachment_id: attachment.id
 
         sign_in user
@@ -26,58 +35,79 @@ RSpec.describe ResultsController, type: :controller do
       end
     end
 
-    context 'when filtered by keyword' do
-      it 'returns all filtered results of user' do
-        user = create :user
-        other_user = create :user
+    context 'given the search parameter is present' do
+      it 'returns success status' do
         keyword = 'e'
+        user = create :user
+
+        sign_in user
+        get :index, params: { q: keyword }
+
+        expect(response).to have_http_status :success
+      end
+
+      it 'returns all filtered results of the user' do
+        keyword = 'e'
+        user = create :user
         attachment = create :attachment, user_id: user.id
         nimble_result = create :result, keyword: 'Nimble', attachment_id: attachment.id
-        company_result = create :result, keyword: 'company', attachment_id: attachment.id
         vietnam_result = create :result, keyword: 'VietNam', attachment_id: attachment.id
-        un_authored_attachment = create :attachment, user_id: other_user.id
+        _company_result = create :result, keyword: 'company', attachment_id: attachment.id
+
+        another_user = create :user
+        another_user_attachment = create :attachment, user_id: another_user.id
+        create :result, keyword: 'Nimble', attachment_id: another_user_attachment.id
+        create :result, keyword: 'VietNam', attachment_id: another_user_attachment.id
+        create :result, keyword: 'company', attachment_id: another_user_attachment.id
 
         sign_in user
         get :index, params: { q: keyword }
         results = controller.instance_variable_get(:@results)
 
-        expect(response).to have_http_status :success
         expect(results.size).to eq(2)
-        expect(results.klass.name).to eq(Result.name)
-        expect(results.pluck('DISTINCT keyword')).to include(nimble_result.keyword, vietnam_result.keyword)
-        expect(results.pluck('DISTINCT keyword')).not_to include(company_result.keyword)
-        expect(results.pluck('DISTINCT attachment_id')).not_to include(un_authored_attachment.id)
+        expect(results).to contain_exactly(nimble_result, vietnam_result)
       end
     end
   end
 
   describe 'GET #show' do
-    it 'returns result of user' do
-      user = create :user
-      attachment = create :attachment, user_id: user.id
-      result = create :result, attachment_id: attachment.id
-      params = { id: result.id }
+    context 'given the user has the permission' do
+      it 'returns success status' do
+        user = create :user
+        attachment = create :attachment, user_id: user.id
+        result = create :result, attachment_id: attachment.id
 
-      sign_in user
-      get :show, params: params
+        sign_in user
+        get :show, params: { id: result.id }
 
-      expect(response).to have_http_status :success
-      expect(controller.instance_variable_get(:@result)).to be_a(Result)
-      expect(controller.instance_variable_get(:@result)).to eq(result)
+        expect(response).to have_http_status :success
+      end
+
+      it 'returns the result of the user' do
+        user = create :user
+        attachment = create :attachment, user_id: user.id
+        result = create :result, attachment_id: attachment.id
+
+        sign_in user
+        get :show, params: { id: result.id }
+
+        expect(response).to have_http_status :success
+        expect(controller.instance_variable_get(:@result)).to eq(result)
+      end
     end
 
-    it 'returns nil for un-authored result' do
-      user = create :user
-      other_user = create :user
-      un_authored_attachment = create :attachment, user_id: other_user.id
-      un_authored_result = create :result, attachment_id: un_authored_attachment.id
-      params = { id: un_authored_result.id }
+    context 'given the user does NOT have the permission' do
+      it 'raises a record not found error' do
+        user = create :user
+        another_user = create :user
+        un_authored_attachment = create :attachment, user_id: another_user.id
+        un_authored_result = create :result, attachment_id: un_authored_attachment.id
 
-      sign_in user
-      get :show, params: params
-
-      expect(response).to have_http_status :success
-      expect(controller.instance_variable_get(:@result)).to eq(nil)
+        sign_in user
+        expect do
+          get :show, params: { id: un_authored_result.id }
+        end.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 end
