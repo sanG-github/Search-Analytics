@@ -75,7 +75,6 @@ RSpec.describe Api::V1::ResultsController, type: :controller do
         sign_in attachment.user
         get :show, params: { id: result.id }
 
-        expect(response).to have_http_status :success
         expect(response.body).to eq(expected_result)
       end
     end
