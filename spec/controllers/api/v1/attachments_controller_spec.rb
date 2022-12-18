@@ -6,8 +6,8 @@ RSpec.describe Api::V1::AttachmentsController, type: :controller do
   end
 
   describe 'POST #create' do
-    context 'when upload valid file' do
-      it 'creates a new attachment and redirects to the detail page' do
+    context 'when a valid file is uploaded' do
+      it 'creates a new attachment' do
         user = create :user
         params = {
           file: fixture_file_upload('valid_file.csv', 'text/csv')
@@ -21,7 +21,7 @@ RSpec.describe Api::V1::AttachmentsController, type: :controller do
       end
     end
 
-    context 'when upload invalid file' do
+    context 'when an invalid file is uploaded' do
       it 'returns an error message' do
         user = create :user
         error_message = 'Cannot handle empty file!'
@@ -31,25 +31,23 @@ RSpec.describe Api::V1::AttachmentsController, type: :controller do
 
         sign_in user
         post :create, params: params
-        result = JSON.parse(response.body)
 
-        expect(result['error']).to be_present
-        expect(result['error']).to eq(error_message)
+        expect(json_response[:error]).to be_present
+        expect(json_response[:error]).to eq(error_message)
       end
     end
 
     context 'when receive a StandardError from service' do
       it 'returns an error message' do
         user = create :user
-        error_message = "Error message test"
-        sign_in user
+        error_message = 'Error message from service'
         allow_any_instance_of(Attachments::CreateService).to receive(:call).and_raise(StandardError, error_message)
 
+        sign_in user
         post :create
-        result = JSON.parse(response.body)
 
-        expect(result['error']).to be_present
-        expect(result['error']).to eq(error_message)
+        expect(json_response[:error]).to be_present
+        expect(json_response[:error]).to eq(error_message)
       end
     end
   end
