@@ -13,7 +13,7 @@ class CrawlGoogleDataService
 
       ads = parse_ads
       links = parse_links
-      total_results = parse_totol_result
+      total_results = parse_total_result
 
       result.done!
       result.update!(total_ads: ads.size, total_links: links.size, total_results: total_results)
@@ -21,6 +21,8 @@ class CrawlGoogleDataService
     end
 
     PushResultWorker.perform_async(result.user.id, broadcast_data)
+  rescue StandardError => e
+    Rails.logger.warn "CrawlGoogleDataService#call: #{e.message}"
   end
 
   private
@@ -63,7 +65,7 @@ class CrawlGoogleDataService
     data.css('a > @href').uniq
   end
 
-  def parse_totol_result
+  def parse_total_result
     data.css(TOTAL_RESULTS_ID).text
   end
 
