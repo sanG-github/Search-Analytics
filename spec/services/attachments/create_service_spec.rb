@@ -25,7 +25,7 @@ RSpec.describe Attachments::CreateService, type: :service do
         expect(user.results.pluck('keyword')).to contain_exactly(*words)
       end
 
-      it 'enqueues a crawl keywords worker' do
+      it 'enqueues a trigger crawl worker' do
         user = create :user
         file = fixture_file_upload('valid_file.csv', 'text/csv')
         worker_jobs = TriggerCrawlWorker.jobs
@@ -38,7 +38,7 @@ RSpec.describe Attachments::CreateService, type: :service do
     end
 
     context 'given an INVALID file is uploaded' do
-      context 'given an INVALID file type' do
+      context 'given the file with INVALID file type' do
         it 'raises an error message' do
           user = create :user
           file = fixture_file_upload('valid_file.csv', 'plaintext')
