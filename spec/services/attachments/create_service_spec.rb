@@ -39,7 +39,7 @@ RSpec.describe Attachments::CreateService, type: :service do
 
     context 'given an INVALID file is uploaded' do
       context 'given the file with INVALID file type' do
-        it 'raises an error message' do
+        it 'raises a BehaviorError with an error message' do
           user = create :user
           file = fixture_file_upload('valid_file.csv', 'plaintext')
           error_message = 'Invalid file type'
@@ -51,7 +51,7 @@ RSpec.describe Attachments::CreateService, type: :service do
       end
 
       context 'given the file caused the reading error' do
-        it 'raises an error message' do
+        it 'raises a BehaviorError with an error message' do
           user = create :user
           file = fixture_file_upload('valid_file.csv', 'text/csv')
           error_message = 'Error when read file'
@@ -63,8 +63,31 @@ RSpec.describe Attachments::CreateService, type: :service do
         end
       end
 
+      context 'given the file is NOT found' do
+        it 'raises a BehaviorError with an error message' do
+          user = create :user
+          error_message = 'File not found'
+
+          subject = described_class.new(file: nil, user: user)
+
+          expect { subject.call }.to raise_error(BehaviorError).with_message(error_message)
+        end
+      end
+
+      context 'given the file with WRONG file type' do
+        it 'raises a BehaviorError with an error message' do
+          user = create :user
+          file = fixture_file_upload('empty_file.csv', 'text/plaintext')
+          error_message = 'Invalid file type'
+
+          subject = described_class.new(file: file, user: user)
+
+          expect { subject.call }.to raise_error(BehaviorError).with_message(error_message)
+        end
+      end
+
       context 'given an empty file' do
-        it 'raises an error message' do
+        it 'raises a BehaviorError with an error message' do
           user = create :user
           file = fixture_file_upload('empty_file.csv', 'text/csv')
           error_message = 'Cannot handle empty file!'
@@ -76,7 +99,7 @@ RSpec.describe Attachments::CreateService, type: :service do
       end
 
       context 'given the file containing keywords that exceed the maximum allowed' do
-        it 'raises an error message' do
+        it 'raises a BehaviorError with an error message' do
           user = create :user
           file = fixture_file_upload('exceed_keywords_allowed_file.csv', 'text/csv')
           error_message = "Only accept files containing up to #{MAX_KEYWORDS} keywords"
