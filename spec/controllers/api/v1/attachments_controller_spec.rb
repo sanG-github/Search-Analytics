@@ -37,7 +37,7 @@ RSpec.describe Api::V1::AttachmentsController, type: :controller do
       end
     end
 
-    context 'when receive a StandardError from service' do
+    context 'when receiving a StandardError from the Attachments::CreateService' do
       it 'returns an error message' do
         user = create :user
         error_message = 'Error message from service'
