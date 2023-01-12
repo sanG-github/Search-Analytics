@@ -18,6 +18,7 @@ RSpec.describe CrawlGoogleDataService, type: :service do
         allow(Rails.logger).to receive(:warn)
 
         subject.call
+
         expect(Rails.logger).to have_received(:warn).with("CrawlGoogleDataService#call: #{error_message}").once
       end
     end
@@ -98,15 +99,15 @@ RSpec.describe CrawlGoogleDataService, type: :service do
       it 'writes a warning log' do
         keyword = 'nimble'
         result = create :result, keyword: keyword, status: :fetching
+        subject = described_class.new(result_id: result.id)
+        error_message = 'StandardError'
 
         allow_any_instance_of(Result).to receive(:create_source_code!).and_raise(StandardError)
+        allow(Rails.logger).to receive(:warn)
 
         VCR.use_cassette("nimble_result") do
-          subject = described_class.new(result_id: result.id)
-          error_message = 'StandardError'
-          allow(Rails.logger).to receive(:warn)
-
           subject.call
+
           expect(Rails.logger).to have_received(:warn).with("CrawlGoogleDataService#call: #{error_message}").once
         end
       end
