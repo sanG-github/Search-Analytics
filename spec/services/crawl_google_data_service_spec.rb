@@ -61,7 +61,8 @@ RSpec.describe CrawlGoogleDataService, type: :service do
           subject.call
 
           expect(worker_jobs.size).to eq(1)
-          expect(worker_jobs.first['args'][0]).to eq(result.user.id)        end
+          expect(worker_jobs.first['args'][0]).to eq(result.user.id)
+        end
       end
     end
 
