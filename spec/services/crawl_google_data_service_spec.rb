@@ -11,7 +11,7 @@ RSpec.describe CrawlGoogleDataService, type: :service do
         expect { subject.call }.not_to raise_error
       end
 
-      it 'writes warning log' do
+      it 'writes a warning log' do
         wrong_result_id = 999
         subject = described_class.new(result_id: wrong_result_id)
         error_message = "Couldn't find Result with 'id'=#{wrong_result_id}"
@@ -23,7 +23,7 @@ RSpec.describe CrawlGoogleDataService, type: :service do
     end
 
     context 'when fetch result successfully' do
-      it 'updates the result record and enqueues a push result worker' do
+      it 'updates the result record' do
         keyword = 'nimble'
         result = create :result, keyword: keyword, status: :fetching
         subject = described_class.new(result_id: result.id)
@@ -43,8 +43,9 @@ RSpec.describe CrawlGoogleDataService, type: :service do
         subject = described_class.new(result_id: result.id)
 
         VCR.use_cassette("nimble_result") do
-          subject.call
-
+          expect do
+            subject.call
+          end.to change(SourceCode, :count).by(1)
           expect(result.source_code).to be_present
         end
       end
@@ -94,7 +95,7 @@ RSpec.describe CrawlGoogleDataService, type: :service do
         end
       end
 
-      it 'writes warning log' do
+      it 'writes a warning log' do
         keyword = 'nimble'
         result = create :result, keyword: keyword, status: :fetching
 
