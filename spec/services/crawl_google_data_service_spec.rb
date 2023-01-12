@@ -29,7 +29,7 @@ RSpec.describe CrawlGoogleDataService, type: :service do
         result = create :result, keyword: keyword, status: :fetching
         subject = described_class.new(result_id: result.id)
 
-        VCR.use_cassette("nimble_result") do
+        VCR.use_cassette('search_results/nimble') do
           expect { subject.call }
             .to change { result.reload.total_ads }
             .and change { result.reload.total_links }
@@ -43,7 +43,7 @@ RSpec.describe CrawlGoogleDataService, type: :service do
         result = create :result, keyword: keyword, status: :fetching
         subject = described_class.new(result_id: result.id)
 
-        VCR.use_cassette("nimble_result") do
+        VCR.use_cassette('search_results/nimble') do
           expect do
             subject.call
           end.to change(SourceCode, :count).by(1)
@@ -57,7 +57,7 @@ RSpec.describe CrawlGoogleDataService, type: :service do
         subject = described_class.new(result_id: result.id)
         worker_jobs = PushResultWorker.jobs
 
-        VCR.use_cassette("nimble_result") do
+        VCR.use_cassette('search_results/nimble') do
           subject.call
 
           expect(worker_jobs.size).to eq(1)
@@ -74,7 +74,7 @@ RSpec.describe CrawlGoogleDataService, type: :service do
 
         allow_any_instance_of(Result).to receive(:create_source_code!).and_raise(StandardError)
 
-        VCR.use_cassette("nimble_result") do
+        VCR.use_cassette('search_results/nimble') do
           expect { subject.call }
             .to not_change { result.reload.total_ads }
             .and not_change { result.reload.total_links }
@@ -90,7 +90,7 @@ RSpec.describe CrawlGoogleDataService, type: :service do
 
         allow_any_instance_of(Result).to receive(:create_source_code!).and_raise(StandardError)
 
-        VCR.use_cassette("nimble_result") do
+        VCR.use_cassette('search_results/nimble') do
           subject.call
 
           expect(PushResultWorker.jobs.size).to eq(0)
@@ -106,7 +106,7 @@ RSpec.describe CrawlGoogleDataService, type: :service do
         allow_any_instance_of(Result).to receive(:create_source_code!).and_raise(StandardError)
         allow(Rails.logger).to receive(:warn)
 
-        VCR.use_cassette("nimble_result") do
+        VCR.use_cassette('search_results/nimble') do
           subject.call
 
           expect(Rails.logger).to have_received(:warn).with("CrawlGoogleDataService#call: #{error_message}").once
