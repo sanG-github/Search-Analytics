@@ -22,10 +22,5 @@ jobs:
         with:
           access_token: ${{ github.token }}
 
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.workflow_run.head_branch || github.ref }}
-
       - name: Render GitHub Action
         uses: Bounceapp/render-action@0.6.0
