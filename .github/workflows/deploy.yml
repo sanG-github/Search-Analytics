@@ -4,9 +4,9 @@ on:
   workflow_run:
     workflows:
       - Test
-    branches:
-      - main
-      - develop
+#    branches:
+#      - main
+#      - develop
     types:
       - completed
 
