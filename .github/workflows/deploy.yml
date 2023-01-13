@@ -1,0 +1,31 @@
+name: Test
+
+on:
+  workflow_run:
+    workflows:
+      - Test
+    branches:
+      - main
+      - develop
+    types:
+      - completed
+
+jobs:
+  deploy:
+    name: Deploy to Render
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    timeout-minutes: 30
+    steps:
+      - name: Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.workflow_run.head_branch || github.ref }}
+
+      - name: Render GitHub Action
+        uses: Bounceapp/render-action@0.6.0
