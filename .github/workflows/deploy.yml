@@ -4,17 +4,18 @@ on:
   workflow_run:
     workflows:
       - Test
-#    branches:
-#      - main
-#      - develop
+    branches:
+      - main
+      - develop
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   deploy:
     name: Deploy to Render
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     timeout-minutes: 30
     steps:
       - name: Cancel previous runs
