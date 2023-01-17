@@ -13,6 +13,7 @@ RSpec.describe TriggerCrawlWorker, type: :job do
         _done_results = create_list :result, FFaker::Number.number, attachment_id: attachment.id, status: :done
 
         described_class.new.perform(attachment.id)
+        
         expect(worker_jobs.size).to eq(number_of_results)
       end
     end
