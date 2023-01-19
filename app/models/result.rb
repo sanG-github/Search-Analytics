@@ -9,8 +9,6 @@ class Result < ApplicationRecord
   enum status: { fetching: 1, done: 2 }
 
   scope :by_keyword, lambda { |keyword|
-    # rubocop:disable Style/StringConcatenation
-    where('keyword LIKE ?', '%' + keyword + '%')
-    # rubocop:enable Style/StringConcatenation
+    where('keyword LIKE ?', "%#{keyword}%")
   }
 end
