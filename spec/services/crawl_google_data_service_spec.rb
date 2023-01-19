@@ -67,7 +67,7 @@ RSpec.describe CrawlGoogleDataService, type: :service do
     end
 
     context 'when fetch result failed' do
-      it 'rollbacks from start' do
+      it 'rollbacks the result creation' do
         keyword = 'nimble'
         result = create :result, keyword: keyword, status: :fetching
         subject = described_class.new(result_id: result.id)
