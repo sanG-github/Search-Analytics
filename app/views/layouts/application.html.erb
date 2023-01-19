@@ -21,10 +21,14 @@
     <% end %>
 
     <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
+      <div class="bg-red-100 mb-4 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <p class="alert alert-success"><%= notice %></p>
+      </div>
     <% end %>
     <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
+      <div class="bg-red-100 mb-4 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <p class="alert alert-danger"><%= alert %></p>
+      </div>
     <% end %>
 
     <%= yield %>
