@@ -13,11 +13,11 @@ RSpec.describe TriggerCrawlWorker, type: :job do
           _fetching_results = create_list :result, number_of_results, attachment_id: attachment.id, status: :fetching
           _done_results = create_list :result, FFaker::Number.number, attachment_id: attachment.id, status: :done
 
-        described_class.new.perform(attachment.id)
+          described_class.new.perform(attachment.id)
 
-        expect(worker_jobs.size).to eq(number_of_results)
+          expect(worker_jobs.size).to eq(number_of_results)
+        end
       end
-    end
 
       context 'when attachment does NOT have any fetching results' do
         it 'does nothing' do

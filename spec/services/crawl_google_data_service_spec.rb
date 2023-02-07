@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 RSpec::Matchers.define_negated_matcher :not_change, :change
 
@@ -76,10 +78,10 @@ RSpec.describe CrawlGoogleDataService, type: :service do
 
         VCR.use_cassette('search_results/nimble') do
           expect { subject.call }
-            .to not_change { result.reload.total_ads }
-            .and not_change { result.reload.total_links }
-            .and not_change { result.reload.total_results }
-            .and not_change { result.reload.status }
+            .to not_change(result, :total_ads)
+            .and not_change(result, :total_links)
+            .and not_change(result, :total_results)
+            .and not_change(result, :status)
         end
       end
 
