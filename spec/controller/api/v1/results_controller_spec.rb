@@ -129,9 +129,8 @@ RSpec.describe Api::V1::ResultsController, type: :controller do
 
         sign_in attachment.user
         get :keywords
-        result = JSON.parse(response.body)
 
-        expect(result).to contain_exactly(nimble_result.keyword, vietnam_result.keyword)
+        expect(json_response).to contain_exactly(nimble_result.keyword, vietnam_result.keyword)
       end
 
       it 'returns unique keywords in all attachments' do
@@ -146,9 +145,8 @@ RSpec.describe Api::V1::ResultsController, type: :controller do
 
         sign_in user
         get :keywords
-        result = JSON.parse(response.body)
 
-        expect(result).to contain_exactly(nimble_result.keyword, company_result.keyword, another_vietnam_result.keyword)
+        expect(json_response).to contain_exactly(nimble_result.keyword, company_result.keyword, another_vietnam_result.keyword)
       end
     end
 
