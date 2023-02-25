@@ -72,7 +72,11 @@ WORKDIR $APP_HOME
 COPY Gemfile* ./
 
 RUN gem install bundler -v 2.0.1
-RUN if [ "$BUILD_ENV" = "production" ]; then bundle install --jobs $BUNDLE_JOBS --path $BUNDLE_PATH --without test ; else bundle install --jobs $BUNDLE_JOBS --path $BUNDLE_PATH ; fi
+RUN if [ "$BUILD_ENV" = "production" ]; then  \
+      bundle install --jobs $BUNDLE_JOBS --path $BUNDLE_PATH --without test ;  \
+    else  \
+      bundle install --jobs $BUNDLE_JOBS --path $BUNDLE_PATH ;  \
+    fi
 
 # Copying the app files must be placed after the dependencies setup
 # since the app files always change thus cannot be cached
