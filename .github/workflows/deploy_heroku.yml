@@ -1,6 +1,8 @@
 name: Deploy Heroku
 
 on:
+  pull_request:
+    branches: [ "*" ]
   workflow_run:
     workflows:
       - Test
