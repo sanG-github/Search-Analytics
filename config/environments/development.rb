@@ -75,5 +75,6 @@ Rails.application.configure do
     host: ENV.fetch("HOST", 'localhost'),
     port: ENV.fetch("PORT", 3000)
   }
-  config.hosts << "rails-search-analytics.fly.dev"
+
+  config.hosts << ENV['DEPLOYED_HOST']
 end
