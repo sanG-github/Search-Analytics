@@ -83,7 +83,7 @@ RUN if [ "$BUILD_ENV" = "production" ]; then  \
 COPY . ./
 
 # Generate masterkey
-RUN EDITOR="mate --wait" bin/rails credentials:edit
+# RUN EDITOR="mate --wait" bin/rails credentials:edit
 
 # Compile assets
 RUN bundle exec rails assets:precompile

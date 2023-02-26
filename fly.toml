@@ -1,0 +1,57 @@
+# fly.toml file generated for search-analytics-sang-ic on 2023-02-26T09:06:33+07:00
+
+app = "search-analytics-sang-ic"
+kill_signal = "SIGINT"
+kill_timeout = 5
+
+[build]
+  [build.args]
+    BUILD_COMMAND = "bin/rails fly:build"
+    SERVER_COMMAND = "bin/rails fly:server"
+
+[deploy]
+  release_command = "bin/rails fly:release"
+
+[env]
+  ASSET_HOST = ""
+  BUILD_ENV = "production"
+  NODE_ENV = "production"
+  PORT = "8080"
+  RUBY_ENV = "production"
+
+[experimental]
+  auto_rollback = true
+
+[processes]
+	web = "bundle exec rails server -b [::] -p 8080"
+	worker = "bundle exec sidekiq"
+
+[[services]]
+  http_checks = []
+  internal_port = 8080
+  processes = ["web"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
+
+[[statics]]
+  guest_path = "/app/public"
+  url_prefix = "/"

@@ -75,5 +75,5 @@ Rails.application.configure do
     host: ENV.fetch("HOST", 'localhost'),
     port: ENV.fetch("PORT", 3000)
   }
-  config.hosts << /search-analytics-(production|staging).herokuapp.com/
+  config.hosts << "rails-search-analytics.fly.dev"
 end
