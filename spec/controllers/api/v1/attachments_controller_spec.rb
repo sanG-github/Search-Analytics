@@ -43,10 +43,14 @@ RSpec.describe Api::V1::AttachmentsController, type: :controller do
       it 'returns an error message' do
         user = create :user
         error_message = 'Error message from service'
-        allow_any_instance_of(Attachments::CreateService).to receive(:call).and_raise(StandardError, error_message)
+        params = {
+          file: fixture_file_upload('valid_file.csv', 'text/csv')
+        }
+
+        allow_any_instance_of(Attachments::CreateService).to receive(:parse_csv_data).and_raise(StandardError, error_message)
 
         sign_in user
-        post :create
+        post :create, params: params
 
         expect(json_response[:error]).to be_present
         expect(json_response[:error]).to eq(error_message)
