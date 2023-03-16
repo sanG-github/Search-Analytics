@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PushNotificationService
   def initialize(user_id:, data:)
     @user_id = user_id

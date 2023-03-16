@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PushResultService
   def initialize(user_id:, data:)
     @user_id = user_id
