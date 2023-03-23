@@ -6,22 +6,11 @@ RSpec::Matchers.define_negated_matcher :not_change, :change
 RSpec.describe CrawlGoogleDataService, type: :service do
   describe '#call' do
     context 'when result not found' do
-      it 'does NOT raise an error' do
+      it 'raises an error' do
         wrong_result_id = 999
         subject = described_class.new(result_id: wrong_result_id)
 
-        expect { subject.call }.not_to raise_error
-      end
-
-      it 'writes a warning log' do
-        wrong_result_id = 999
-        subject = described_class.new(result_id: wrong_result_id)
-        error_message = "Couldn't find Result with 'id'=#{wrong_result_id}"
-        allow(Rails.logger).to receive(:warn)
-
-        subject.call
-
-        expect(Rails.logger).to have_received(:warn).with("CrawlGoogleDataService#call: #{error_message}").once
+        expect { subject.call }.to raise_error(CrawlGoogleError)
       end
     end
 
@@ -74,11 +63,11 @@ RSpec.describe CrawlGoogleDataService, type: :service do
         result = create :result, keyword: keyword, status: :fetching
         subject = described_class.new(result_id: result.id)
 
-        allow_any_instance_of(Result).to receive(:create_source_code!).and_raise(StandardError)
+        allow_any_instance_of(Result).to receive(:create_source_code!).and_raise('Error message')
 
         VCR.use_cassette('search_results/nimble') do
-          expect { subject.call }
-            .to not_change(result, :total_ads)
+          expect { subject.call }.to raise_error(CrawlGoogleError, 'Error message')
+            .and not_change(result, :total_ads)
             .and not_change(result, :total_links)
             .and not_change(result, :total_results)
             .and not_change(result, :status)
@@ -90,25 +79,11 @@ RSpec.describe CrawlGoogleDataService, type: :service do
         result = create :result, keyword: keyword, status: :fetching
         subject = described_class.new(result_id: result.id)
 
-        allow_any_instance_of(Result).to receive(:create_source_code!).and_raise(StandardError)
+        allow_any_instance_of(Result).to receive(:create_source_code!).and_raise('Error message')
 
         VCR.use_cassette('search_results/nimble') do
-          subject.call
-
+          expect { subject.call }.to raise_error(CrawlGoogleError, 'Error message')
           expect(PushResultWorker.jobs.size).to eq(0)
-        end
-      end
-
-      it 'writes a warning log' do
-        keyword = 'nimble'
-        result = create :result, keyword: keyword, status: :fetching
-        subject = described_class.new(result_id: result.id)
-        error_message = 'Error message of CrawlGoogleError'
-
-        allow_any_instance_of(Result).to receive(:create_source_code!).and_raise(StandardError, error_message)
-
-        VCR.use_cassette('search_results/nimble') do
-          expect(subject.call).to raise_error(CrawlGoogleError).with_message(error_message)
         end
       end
     end
