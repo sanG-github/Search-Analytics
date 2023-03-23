@@ -68,7 +68,6 @@ group :development, :test do
   gem 'ffaker'
   gem 'rails-controller-testing'
   gem 'rspec-rails'
-  gem 'rspec-sidekiq'
 end
 
 group :development do
@@ -92,4 +91,5 @@ group :test do
   gem 'vcr'
   gem 'webmock'
   gem "webdrivers"
+  gem 'rspec-sidekiq'
 end
