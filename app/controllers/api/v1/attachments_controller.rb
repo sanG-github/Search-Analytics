@@ -7,10 +7,8 @@ module Api
         attachment = Attachments::CreateService.new(file: attachment_params[:file], user: current_user).call
 
         render json: attachment
-      rescue BehaviorError => e
+      rescue CreateAttachmentError => e
         render json: { error: e.message }, status: :unprocessable_entity
-      rescue StandardError => e
-        render json: { error: e }, status: :unprocessable_entity
       end
 
       private

@@ -82,7 +82,7 @@ RSpec.describe AttachmentsController, type: :controller do
         post :create, params: params
 
         expect(PushNotificationWorker.jobs.size).to eq(1)
-        expect(PushNotificationWorker.jobs.first['args'][1]['message']).to eq(error_message)
+        expect(PushNotificationWorker.jobs.first['args'][1]).to eq(error_message)
       end
     end
   end
