@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
@@ -70,7 +72,9 @@ Rails.application.configure do
 
   # Devise mailer
   config.action_mailer.default_url_options = {
-    host: ENV.fetch("HOST") { 'localhost' },
+    host: ENV.fetch("HOST", 'localhost'),
     port: ENV.fetch("PORT", 3000)
   }
+
+  config.hosts << ENV['DEPLOYED_HOST']
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
@@ -82,6 +84,9 @@ Rails.application.configure do
   # require "syslog/logger"
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
 
+  # Prevents sprockets of using sass mode and SassC gem (which based on deprecated LibSass library) in assets:precompile step
+  config.assets.css_compressor = nil
+
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new($stdout)
     logger.formatter = config.log_formatter
@@ -90,4 +95,5 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  config.hosts << ENV['DEPLOYED_HOST']
 end

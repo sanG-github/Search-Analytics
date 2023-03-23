@@ -1,0 +1,24 @@
+name: Deploy to Fly.io
+
+on:
+  workflow_run:
+    workflows:
+      - Test
+    branches:
+      - main
+      - develop
+    types:
+      - completed
+  workflow_dispatch:
+
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+jobs:
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy
